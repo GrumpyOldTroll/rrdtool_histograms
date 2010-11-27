@@ -1,0 +1,49 @@
+<html>
+<head>
+	<title>RRD Histogram</title>
+	<script src="http://protovis-js.googlecode.com/svn/trunk/protovis-r3.1.js" type="text/javascript"></script>
+</head>
+<body>
+
+<script type="text/javascript+protovis">
+
+var numbers = [4.0, 4.0];
+
+var data_names = ['bucket1', 'bucket2'];
+
+var panelWidth = 250;
+
+var panelHeight = 140;
+
+var barWidth = panelWidth/numbers.length;
+
+var barSpacing = 5;
+
+new pv.Panel().width(panelWidth).height(panelHeight)
+        .bottom(20).left(20)
+    .root.add(pv.Bar)
+        .data(numbers)
+        .height(function(d) d * 34.0).width(barWidth-barSpacing)
+        .bottom(0).left(function() this.index * barWidth)
+        .anchor("top").add(pv.Label).text(function(d) "value: " + d)
+    .root.add(pv.Rule)
+        .data(function() pv.range(0, 4.0, 0.5))
+        .bottom(function(d) d * 34.0)
+        .anchor("left").add(pv.Label)
+        .textMargin(6)
+    .root.anchor("bottom").add(pv.Label)
+        .data(data_names)
+        .left(function() this.index * barWidth + barWidth/2)
+        .textBaseline("top")
+        .textMargin(5)
+        .text(function(d) d)
+    .root.render();
+</script>
+
+<p>
+The unlabled bars now have values!
+I haven't figured out how to put in units or labels yet, but I'm working on it.
+</p>
+
+</body>
+</html>
